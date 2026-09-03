@@ -1,0 +1,13 @@
+.env
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+__pycache__/
+*.pyc
+venv/
+.venv/
+node_modules/
+dist/
+rustup-init.exe
+*.exe

@@ -1,0 +1,130 @@
+/* ==========================================================================
+   REACT BITS - LIQUID GLASS CAUSTIC SURFACE
+   Realistic Fluid Distortion, Prismatic Chromatic Aberration & Specular Light
+   ========================================================================== */
+
+.liquid-glass-surface {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.32) 0%,
+    rgba(210, 235, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.25) 100%
+  );
+  backdrop-filter: blur(14px) saturate(2.0) brightness(1.12);
+  -webkit-backdrop-filter: blur(14px) saturate(2.0) brightness(1.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 18px 45px -8px rgba(15, 35, 55, 0.32),
+    0 0 0 1px rgba(255, 255, 255, 0.65),
+    inset 0 2px 4px rgba(255, 255, 255, 0.95),
+    inset 0 -3px 8px rgba(100, 180, 255, 0.3);
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.28s ease;
+}
+
+.liquid-glass-svg-filter {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  z-index: -1;
+}
+
+/* Fluid Water Caustic Light Mesh */
+.liquid-caustics-mesh {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at 20% 30%, rgba(255, 255, 255, 0.5) 0%, transparent 40%),
+    radial-gradient(ellipse at 80% 70%, rgba(255, 255, 255, 0.4) 0%, transparent 45%),
+    radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.25) 0%, transparent 60%);
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  z-index: 1;
+}
+
+/* Water Ripple Waveform Texture */
+.liquid-caustics-ripples {
+  position: absolute;
+  inset: -20%;
+  width: 140%;
+  height: 140%;
+  background: repeating-radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 255, 255, 0.14) 0,
+    rgba(255, 255, 255, 0.14) 4px,
+    transparent 4px,
+    transparent 14px
+  );
+  opacity: 0.7;
+  filter: blur(3px);
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  animation: liquidCausticWobble 12s infinite ease-in-out alternate;
+  z-index: 2;
+}
+
+/* Prismatic Chromatic Aberration Fringe (Rainbow Edges like Image 2) */
+.liquid-prismatic-border {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow:
+    inset 3px 0 8px rgba(255, 90, 90, 0.45),
+    inset -3px 0 8px rgba(90, 160, 255, 0.55),
+    inset 0 4px 8px rgba(255, 235, 120, 0.4),
+    inset 0 -4px 8px rgba(100, 255, 200, 0.35);
+  mix-blend-mode: screen;
+  z-index: 3;
+}
+
+/* Specular Lens Reflection Across the Top */
+.liquid-specular-highlight {
+  position: absolute;
+  top: 0;
+  left: 5%;
+  right: 5%;
+  height: 48%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 100%
+  );
+  border-radius: 9999px;
+  filter: blur(1px);
+  pointer-events: none;
+  opacity: 0.85;
+  z-index: 4;
+}
+
+/* Interactive Content Layer */
+.liquid-glass-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  z-index: 10;
+}
+
+@keyframes liquidCausticWobble {
+  0% {
+    transform: translate(-3%, -2%) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translate(3%, 2%) rotate(1.5deg) scale(1.04);
+  }
+  100% {
+    transform: translate(-2%, 3%) rotate(-1deg) scale(0.98);
+  }
+}
